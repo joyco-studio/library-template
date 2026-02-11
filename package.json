@@ -29,6 +29,7 @@
   },
   "author": "joyco.studio",
   "license": "ISC",
+  "packageManager": "pnpm@10.29.2",
   "devDependencies": {
     "@changesets/cli": "^2.27.11",
     "@eslint/js": "^9.18.0",
