@@ -1,0 +1,69 @@
+# -------------------------------------------------------------------
+# Release Workflow — OIDC Provenance Publishing
+# -------------------------------------------------------------------
+# This workflow uses npm's provenance feature with GitHub Actions OIDC
+# instead of a long-lived NPM_TOKEN secret.
+#
+# HOW OIDC PUBLISHING WORKS:
+#   1. GitHub Actions generates a short-lived OIDC token for this run
+#   2. npm uses that token to cryptographically prove the package was
+#      built from this exact repo/commit/workflow
+#   3. The published package gets a "provenance" badge on npmjs.com
+#
+# SETUP REQUIRED:
+#   1. On npmjs.com, go to your package Settings > Publishing access
+#   2. Under "Configure trusted publishing", add this GitHub repo
+#      and workflow file (.github/workflows/release.yml)
+#   3. Set the environment to "release" (matching the job below)
+#   4. No NPM_TOKEN secret needed — the OIDC identity is the auth
+#
+# PERMISSIONS EXPLAINED:
+#   - id-token: write    → Generate OIDC token for npm provenance
+#   - contents: write    → Changesets pushes version bumps & tags
+#   - pull-requests: write → Changesets creates "Version Packages" PRs
+# -------------------------------------------------------------------
+
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    environment: release
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          version: pnpm version:package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
