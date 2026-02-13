@@ -14,8 +14,7 @@
 #   1. On npmjs.com, go to your package Settings > Publishing access
 #   2. Under "Configure trusted publishing", add this GitHub repo
 #      and workflow file (.github/workflows/release.yml)
-#   3. Set the environment to "release" (matching the job below)
-#   4. No NPM_TOKEN secret needed — the OIDC identity is the auth
+#   3. No NPM_TOKEN secret needed — the OIDC identity is the auth
 #
 # PERMISSIONS EXPLAINED:
 #   - id-token: write    → Generate OIDC token for npm provenance
@@ -41,7 +40,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    environment: release
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
