@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { VERSION } from './index'
-import { version } from '../../package.json'
+import { VERSION } from '../packages/core'
+import { version } from '../package.json'
 
 describe('VERSION', () => {
   it('is exported and matches package.json', () => {
