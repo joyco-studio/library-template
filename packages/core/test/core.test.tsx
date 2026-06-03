@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { GenericComponent, useGenericHook } from '../packages/core/core'
+import { GenericComponent, useGenericHook } from '../core'
 
 describe('GenericComponent', () => {
   it('renders its content', () => {

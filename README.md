@@ -62,7 +62,7 @@ pnpm test
 pnpm test:watch
 ```
 
-Tests live in the top-level `test/` folder as `*.test.ts` / `*.test.tsx` files (see `test/` for examples). The included `.github/workflows/ci.yml` workflow typechecks and runs the suite on every pull request.
+Tests live in a `test/` folder inside each package as `*.test.ts` / `*.test.tsx` files (see `packages/core/test/` for examples). The included `.github/workflows/ci.yml` workflow typechecks and runs the suite on every pull request.
 
 <br/>
 
