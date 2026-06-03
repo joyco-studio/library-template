@@ -16,6 +16,6 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "include": ["packages/**/*"],
+  "include": ["packages/**/*", "vitest.config.ts", "vitest.setup.ts"],
   "exclude": ["node_modules", "dist"]
 }
