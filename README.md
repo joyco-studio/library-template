@@ -10,6 +10,7 @@ A generic library template starter for brand new libraries.
 | 🔍 PR Preview          | Optional package preview builds for every PR and commit with [pkg.pr.new](https://github.com/stackblitz-labs/pkg.pr.new) |
 | 🎯 TypeScript Ready    | Full TypeScript support with strict type checking |
 | 🧹 Code Quality        | ESLint and Prettier pre-configured for code quality |
+| 🧪 Testing Ready       | **Vitest** + **Testing Library** pre-configured, with CI running on every PR |
 | ⚛️ React Support       | React support with proper peer dependencies **React 19** + **React Compiler** ready |
 | 🔒 Type Safety         | Strict TypeScript configuration for better type safety |
 
@@ -46,6 +47,22 @@ pnpm remove @types/react react
 ```
 
 Then **manually** remove the peerDependencies section from `package.json` and also check `eslint.config.js`, `tsconfig.json`.
+
+<br/>
+
+## 🧪 Testing
+
+This template ships test-ready with [Vitest](https://vitest.dev) and [Testing Library](https://testing-library.com), running in a `jsdom` environment so you can test both plain logic and React components.
+
+```bash
+# Run the suite once
+pnpm test
+
+# Run in watch mode while developing
+pnpm test:watch
+```
+
+Tests live next to the source as `*.test.ts` / `*.test.tsx` files (see `packages/core/*.test.*` for examples). The included `.github/workflows/ci.yml` workflow typechecks and runs the suite on every pull request.
 
 <br/>
 
