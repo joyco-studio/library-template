@@ -185,8 +185,13 @@ async function main() {
       )
     }
 
-    // Delete .changeset folder and CHANGELOG.md
-    await fs.rm(join(__dirname, '.changeset'), { recursive: true, force: true })
+    // Clear template release history while preserving release guidance and config
+    const changesetDir = join(__dirname, '.changeset')
+    for (const file of await fs.readdir(changesetDir)) {
+      if (file !== 'README.md' && file !== 'config.json') {
+        await fs.rm(join(changesetDir, file), { recursive: true, force: true })
+      }
+    }
     await fs.rm(join(__dirname, 'CHANGELOG.md'), { force: true })
 
     // Install dependencies

@@ -98,14 +98,20 @@ This will prompt you to:
 
 ### Creating a release
 
-To create a new version and update the changelog:
+Stable and beta releases use GitHub Actions and Changesets release PRs. Enable
+`.github/workflows/release.yml` and configure npm trusted publishing as described
+in that workflow before releasing.
 
-```bash
-# 1. Create new versions of packages
-pnpm version:package
+1. Add a changeset and merge the reviewed feature PR into `main` after checks pass.
+2. Let the Release workflow create or update **Version Packages**.
+3. Review and merge that generated PR to trigger automated publication.
+4. Verify the successful workflow run and the published npm version and dist-tag.
 
-# 2. Release (builds and publishes to npm)
-pnpm release
-```
+For a beta, run `pnpm changeset pre enter beta` on a feature branch and include
+`.changeset/pre.json` with the changeset in the feature PR. Subsequent changesets
+continue publishing betas until `pnpm changeset pre exit` is committed through
+another feature PR. Both transitions use the same generated release PR flow.
 
-Remember to commit all changes after creating a release.
+Versioning and publishing commands are reserved for the Release workflow; do not
+publish manually. See [.changeset/README.md](.changeset/README.md) for the full
+stable and beta procedure and [AGENTS.md](AGENTS.md) for agent release rules.
